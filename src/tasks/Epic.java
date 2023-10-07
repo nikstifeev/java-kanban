@@ -10,9 +10,10 @@ public class Epic extends Task {
         super(name, description);
     }
 
-    public Epic(String name, String description, int id) {
-        super(name, description);
-        this.id = id;
+    // copy object
+    public Epic(Epic otherEpic) {
+        super(otherEpic);
+        this.idSubtasks = otherEpic.idSubtasks;
     }
 
     public ArrayList<Integer> getIdSubtasks() {
@@ -26,11 +27,11 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "Epic{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", idSubtasks=" + idSubtasks +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
-                ", id=" + id +
-                ", idSubtasks=" + idSubtasks +
                 '}';
     }
 }

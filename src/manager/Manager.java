@@ -11,7 +11,6 @@ public class Manager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private Integer id = 0;
 
     public ArrayList<Task> getAllTasks() {
         ArrayList<Task> allTasks = new ArrayList<>();
@@ -30,8 +29,7 @@ public class Manager {
     }
 
     public void createTask(Task task) {
-        task.setId(++id);
-        tasks.put(id, task);
+        tasks.put(task.getId(), task);
     }
 
     public void updateTask(Task task) {
@@ -62,9 +60,8 @@ public class Manager {
     }
 
     public void createEpic(Epic epic) {
-        epic.setId(++id);
         updateEpicStatus(epic);
-        epics.put(id, epic);
+        epics.put(epic.getId(), epic);
     }
 
     public void updateEpic(Epic epic) {
@@ -108,10 +105,8 @@ public class Manager {
     public void createSubtask(Subtask subtask) {
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
-            subtask.setId(++id);
-            subtasks.put(id, subtask);
+            subtasks.put(subtask.getId(), subtask);
             epic.getIdSubtasks().add(subtask.getId());
-            updateEpicStatus(epic);
         }
     }
 

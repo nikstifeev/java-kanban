@@ -8,9 +8,9 @@ public class Main {
     public static void main(String[] args) {
         Manager manager = new Manager();
 
-        Task task1 = new Task("Пройти 1ый урок", "Инкапсуляция", "NEW");
+        Task task1 = new Task("Пройти 1ый урок", "Инкапсуляция");
         manager.createTask(task1);
-        Task task2 = new Task("Пройти 2ой урок", "Наследование", "NEW");
+        Task task2 = new Task("Пройти 2ой урок", "Наследование");
         manager.createTask(task2);
 
         Epic epic1 = new Epic("Посетить форум", "В ноябре");
@@ -18,18 +18,34 @@ public class Main {
         Epic epic2 = new Epic("Закончить курс", "Java-разаботчик");
         manager.createEpic(epic2);
 
-        Subtask subtask1 = new Subtask("Подготовить доклад", "На 7 минут", "NEW", 3);
+        Subtask subtask1 = new Subtask("Подготовить доклад", "На 7 минут", 3);
         manager.createSubtask(subtask1);
-        Subtask subtask2 = new Subtask("Подготовить презентацию", "На 9 слайдов", "NEW", 3);
+        Subtask subtask2 = new Subtask("Подготовить презентацию", "На 9 слайдов", 3);
         manager.createSubtask(subtask2);
-        Subtask subtask3 = new Subtask("Написать проект", "Дипломный", "NEW", 4);
+        Subtask subtask3 = new Subtask("Написать проект", "Дипломный", 4);
         manager.createSubtask(subtask3);
 
-        manager.updateTask(new Task("Пройти 1ый урок", "Циклы", "DONE", 1));
-        manager.updateSubtask(new Subtask("Подготовить доклад", "На 7 минут", "DONE", 3, 5));
-        manager.updateSubtask(new Subtask("Подготовить презентацию", "На 9 слайдов", "IN_PROGRESS", 3, 6));
-        manager.updateSubtask(new Subtask("Написать проект", "Дипломный", "DONE", 4, 7));
-        manager.updateEpic(new Epic("Посетить форум", "В декабре", 3));
+        Task updTask1 = new Task(task1);
+        updTask1.setName("Повторить 1ый урок");
+        updTask1.setDescription("Git");
+        updTask1.setStatus("IN_PROGRESS");
+        manager.updateTask(updTask1);
+
+        Subtask updSubtask1 = new Subtask(subtask1);
+        updSubtask1.setStatus("DONE");
+        manager.updateSubtask(updSubtask1);
+
+        Subtask updSubtask2 = new Subtask(subtask2);
+        updSubtask2.setStatus("IN_PROGRESS");
+        manager.updateSubtask(updSubtask2);
+
+        Subtask updSubtask3 = new Subtask(subtask3);
+        updSubtask3.setStatus("DONE");
+        manager.updateSubtask(updSubtask3);
+
+        Epic updEpic1 = new Epic(epic1);
+        updEpic1.setDescription("В декабре");
+        manager.updateEpic(updEpic1);
 
 //        manager.deleteTaskById(2);
 //        manager.deleteEpicById(4);

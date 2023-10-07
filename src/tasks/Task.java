@@ -1,27 +1,29 @@
 package tasks;
 
 public class Task {
+    protected int id;
     protected String name;
     protected String description;
     protected String status;
-    protected int id;
+    private static int count = 0;
 
-    public Task(String name, String description, String status) {
+    public Task(String name, String description) {
+        this.id = generateId();
         this.name = name;
         this.description = description;
-        this.status = status;
+        this.status = "NEW";
     }
 
-    public Task(String name, String description, String status, int id) {
-        this.name = name;
-        this.description = description;
-        this.status = status;
-        this.id = id;
+    // copy object
+    public Task(Task otherTask) {
+        this.id = otherTask.id;
+        this.name = otherTask.name;
+        this.description = otherTask.description;
+        this.status = otherTask.status;
     }
 
-    protected Task(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public int getId() {
+        return id;
     }
 
     public String getStatus() {
@@ -32,21 +34,25 @@ public class Task {
         this.status = status;
     }
 
-    public int getId() {
-        return id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private Integer generateId() {
+        return ++count;
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
-                ", id=" + id +
                 '}';
     }
 }

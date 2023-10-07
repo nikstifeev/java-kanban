@@ -4,14 +4,15 @@ public class Subtask extends Task {
 
     private int epicId;
 
-    public Subtask(String name, String description, String status, int epicId) {
-        super(name, description, status);
+    public Subtask(String name, String description, int epicId) {
+        super(name, description);
         this.epicId = epicId;
     }
 
-    public Subtask(String name, String description, String status, int epicId, int id) {
-        super(name, description, status, id);
-        this.epicId = epicId;
+    // copy object
+    public Subtask(Subtask otherSubtask) {
+        super(otherSubtask);
+        this.epicId = otherSubtask.epicId;
     }
 
     public int getEpicId() {
@@ -21,11 +22,11 @@ public class Subtask extends Task {
     @Override
     public String toString() {
         return "Subtask{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", epicId=" + epicId +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
-                ", id=" + id +
-                ", epicId=" + epicId +
                 '}';
     }
 }
