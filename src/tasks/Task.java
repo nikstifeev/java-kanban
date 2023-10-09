@@ -4,14 +4,14 @@ public class Task {
     protected int id;
     protected String name;
     protected String description;
-    protected String status;
+    protected Status status;
     private static int count = 0;
 
     public Task(String name, String description) {
         this.id = generateId();
         this.name = name;
         this.description = description;
-        this.status = "NEW";
+        this.status = Status.NEW;
     }
 
     // copy object
@@ -26,11 +26,11 @@ public class Task {
         return id;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
