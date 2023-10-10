@@ -68,7 +68,7 @@ public class Main {
         System.out.println("История: " + manager.getHistory());
         System.out.println("Сабтаск по id: " + manager.getSubtaskById(7));
         System.out.println("История: " + manager.getHistory());
-        System.out.println("Таск по id: " + manager.getTaskById(1));
+        System.out.println("Сабтаск по id: " + manager.getSubtaskById(7));
         System.out.println("История: " + manager.getHistory());
 
     }
