@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    Map<Integer, Node> nodes = new HashMap<>();
+    private final Map<Integer, Node> nodes = new HashMap<>();
     private Node head;
     private Node tail;
 
@@ -51,10 +51,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
-        Node node = head;
+        Node node = tail;
         while (node != null) {
             tasks.add(node.data);
-            node = node.next;
+            node = node.prev;
         }
         return tasks;
     }
