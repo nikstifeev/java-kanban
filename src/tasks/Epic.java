@@ -9,12 +9,14 @@ public class Epic extends Task {
 
     public Epic(String name, String description) {
         super(name, description);
+        this.type = TypeTask.EPIC;
     }
 
     // copy object
     public Epic(Epic otherEpic) {
         super(otherEpic);
         this.idSubtasks = otherEpic.idSubtasks;
+        this.type = TypeTask.EPIC;
     }
 
     public List<Integer> getIdSubtasks() {
@@ -27,12 +29,6 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
-                "id=" + id +
-                ", idSubtasks=" + idSubtasks +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return super.toString();
     }
 }
