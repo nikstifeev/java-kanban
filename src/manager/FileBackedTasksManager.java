@@ -59,8 +59,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     private final Path path;
 
-    public FileBackedTasksManager(Path file) {
-        this.path = file;
+    public FileBackedTasksManager(Path path) {
+        this.path = path;
     }
 
     private void save() throws ManagerSaveException {
@@ -86,9 +86,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    public static FileBackedTasksManager loadFromFile(Path file) {
-        FileBackedTasksManager manager = new FileBackedTasksManager(file);
-        try (BufferedReader br = new BufferedReader(new FileReader(String.valueOf(file), StandardCharsets.UTF_8))) {
+    public static FileBackedTasksManager loadFromFile(Path path) {
+        FileBackedTasksManager manager = new FileBackedTasksManager(path);
+        try (BufferedReader br = new BufferedReader(new FileReader(String.valueOf(path), StandardCharsets.UTF_8))) {
             br.readLine();
             List<Integer> ids = new ArrayList<>();
 
