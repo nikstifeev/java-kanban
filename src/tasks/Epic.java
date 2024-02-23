@@ -19,6 +19,7 @@ public class Epic extends Task {
         super(otherEpic);
         this.idSubtasks = otherEpic.idSubtasks;
         this.type = TypeTask.EPIC;
+        this.endTime = otherEpic.endTime;
     }
 
     public List<Integer> getIdSubtasks() {
@@ -32,11 +33,6 @@ public class Epic extends Task {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    @Override
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
     }
 
     public void setIdSubtasks(List<Integer> idSubtasks) {
