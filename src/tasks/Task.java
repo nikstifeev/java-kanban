@@ -1,8 +1,12 @@
 package tasks;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalDateTime;
+import java.util.Objects;
+
 public class Task implements Comparable<Task> {
-    protected int id;
+    protected Integer id;
     protected String name;
     protected String description;
     protected Status status;
@@ -19,11 +23,35 @@ public class Task implements Comparable<Task> {
         this.type = TypeTask.TASK;
     }
 
+    public Task(Integer id, String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public Task(String name, String description, long duration, LocalDateTime startTime) {
         this.id = generateId();
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        this.type = TypeTask.TASK;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    // for http-test
+    public Task(String name, String description, LocalDateTime startTime, long duration) {
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    // for http-test
+    public Task(Integer id, String name, String description, Status status, LocalDateTime startTime, long duration) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
         this.type = TypeTask.TASK;
         this.duration = duration;
         this.startTime = startTime;
@@ -40,7 +68,11 @@ public class Task implements Comparable<Task> {
         this.startTime = otherTask.startTime;
     }
 
-    public int getId() {
+    public void setType(TypeTask type) {
+        this.type = type;
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -68,11 +100,11 @@ public class Task implements Comparable<Task> {
         this.description = description;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    private Integer generateId() {
+    public static Integer generateId() {
         return ++count;
     }
 
@@ -82,6 +114,10 @@ public class Task implements Comparable<Task> {
 
     public static void setCount(int count) {
         Task.count = count;
+    }
+
+    public static int getCount() {
+        return count;
     }
 
     public void setDuration(Long duration) {
@@ -118,6 +154,19 @@ public class Task implements Comparable<Task> {
         } else {
             return this.getStartTime().compareTo(otherTask.getStartTime());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status && type == task.type && Objects.equals(duration, task.duration) && Objects.equals(startTime, task.startTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, status, type, duration, startTime);
     }
 
     @Override
