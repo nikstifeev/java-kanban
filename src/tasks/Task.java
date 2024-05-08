@@ -1,7 +1,5 @@
 package tasks;
 
-import com.google.gson.annotations.Expose;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 

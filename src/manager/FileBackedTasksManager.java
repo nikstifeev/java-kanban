@@ -140,7 +140,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     break;
                 }
             }
-            
             List<Integer> history = CSVFormat.historyFromString(br.readLine());
             Collections.reverse(history);
             for (Integer id : history) {

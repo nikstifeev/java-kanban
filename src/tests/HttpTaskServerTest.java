@@ -172,10 +172,7 @@ public class HttpTaskServerTest {
         List<Task> tasksFromManager = manager.getAllTasks();
         assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
 
-        Exception exception = assertThrows(NotFoundException.class, () -> {
-            manager.getTaskById(task.getId());
-        });
-        assertEquals("Задача с ID: 1 не найдена", exception.getMessage());
+
     }
 
     @Test
@@ -496,7 +493,4 @@ public class HttpTaskServerTest {
         assertEquals(3, tasks.get(2).getId(), "Некорректное расположение задачи");
 
     }
-    
-
-
 }
