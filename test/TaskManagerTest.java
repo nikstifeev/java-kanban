@@ -1,5 +1,3 @@
-package tests;
-
 import manager.TaskManager;
 import manager.exceptions.NotFoundEpicForSubtaskException;
 import manager.exceptions.NotFoundException;

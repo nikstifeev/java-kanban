@@ -1,5 +1,3 @@
-package tests;
-
 import com.google.gson.Gson;
 import manager.InMemoryTaskManager;
 import manager.TaskManager;
