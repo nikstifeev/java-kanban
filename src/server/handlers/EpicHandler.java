@@ -24,27 +24,7 @@ public class EpicHandler extends BaseHttpHandler {
         this.gson = gson;
     }
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException {
-        String path = exchange.getRequestURI().getPath();
-        String method = exchange.getRequestMethod();
-        switch (method) {
-            case "GET":
-                handleGet(exchange, path);
-                break;
-            case "POST":
-                handlePost(exchange, path);
-                break;
-            case "DELETE":
-                handleDelete(exchange, path);
-                break;
-            default:
-                sendText(exchange, "Некорректный метод", 400);
-        }
-
-    }
-
-    private void handleGet(HttpExchange exchange, String path) throws IOException {
+    protected void handleGet(HttpExchange exchange, String path) throws IOException {
         String[] parts = path.split("/");
         Optional<Integer> epicId = getId(exchange);
 
@@ -82,7 +62,7 @@ public class EpicHandler extends BaseHttpHandler {
         }
     }
 
-    private void handlePost(HttpExchange exchange, String path) throws IOException {
+    protected void handlePost(HttpExchange exchange, String path) throws IOException {
         String[] parts = path.split("/");
         InputStream inputStream = exchange.getRequestBody();
         String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
@@ -106,7 +86,7 @@ public class EpicHandler extends BaseHttpHandler {
         }
     }
 
-    private void handleDelete(HttpExchange exchange, String path) throws IOException {
+    protected void handleDelete(HttpExchange exchange, String path) throws IOException {
         String[] parts = path.split("/");
         Optional<Integer> epicId = getId(exchange);
         if (parts.length == 3) {

@@ -17,22 +17,17 @@ public class HistoryHandler extends BaseHttpHandler {
         this.gson = gson;
     }
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException {
-        String method = exchange.getRequestMethod();
-        switch (method) {
-            case "GET":
-                handleGet(exchange);
-                break;
-            default:
-                sendText(exchange, "Некорректный метод", 400);
-        }
-
-    }
-
-    private void handleGet(HttpExchange exchange) throws IOException {
+    protected void handleGet(HttpExchange exchange, String path) throws IOException {
         List<Task> history = manager.getHistory();
         String response = gson.toJson(history);
         sendText(exchange, response, 200);
+    }
+
+    protected void handlePost(HttpExchange exchange, String path) throws IOException {
+        sendText(exchange, "Некорректный метод", 400);
+    }
+
+    protected void handleDelete(HttpExchange exchange, String path) throws IOException {
+        sendText(exchange, "Некорректный метод", 400);
     }
 }

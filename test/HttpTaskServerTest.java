@@ -65,19 +65,17 @@ public class HttpTaskServerTest {
 
     @Test
     public void testPOSTtask_create_timeOverlap() throws IOException, InterruptedException {
-        Task task = new Task("новый таск", "тест таска", LocalDateTime.of(2024, 5, 17, 13, 30, 0), 60);
-        Task task2 = new Task("новый таск", "тест таска", LocalDateTime.of(2024, 5, 17, 14, 0, 0), 60);
+        Task task = new Task("новый таск", "тест таска", LocalDateTime.of(2024, 5, 17, 14, 0, 0), 60);
         String taskJson = gson.toJson(task);
-        String task2Json = gson.toJson(task2);
+        Task task2 = new Task(2, "новый таск", "тест таска", Status.NEW, LocalDateTime.of(2024, 5, 17, 14, 30, 0), 60);
+        manager.createTask(task2);
 
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/tasks/");
         HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(taskJson)).uri(url).build();
-        HttpRequest request2 = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(task2Json)).uri(url).build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> response2 = client.send(request2, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(406, response2.statusCode());
+        assertEquals(406, response.statusCode());
     }
 
     @Test
@@ -276,17 +274,15 @@ public class HttpTaskServerTest {
         manager.createEpic(epic);
         Subtask subtask = new Subtask("новый сабтаск", "тест сабтаска", LocalDateTime.of(2024, 5, 17, 13, 30, 0), 60, 1);
         String subtaskJson = gson.toJson(subtask);
-        Subtask subtask2 = new Subtask("новый сабтаск", "тест сабтаска", LocalDateTime.of(2024, 5, 17, 14, 10, 0), 60, 1);
-        String subtaskJson2 = gson.toJson(subtask2);
+        Subtask subtask2 = new Subtask(3, "новый сабтаск", "тест сабтаска", Status.NEW, LocalDateTime.of(2024, 5, 17, 14, 10, 0), 60, 1);
+        manager.createSubtask(subtask2);
 
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/subtasks/");
         HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(subtaskJson)).uri(url).build();
-        HttpRequest request2 = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(subtaskJson2)).uri(url).build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> response2 = client.send(request2, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(406, response2.statusCode());
+        assertEquals(406, response.statusCode());
     }
 
     @Test

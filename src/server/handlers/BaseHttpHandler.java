@@ -9,6 +9,31 @@ import java.util.Optional;
 
 public abstract class BaseHttpHandler implements HttpHandler {
 
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        String path = exchange.getRequestURI().getPath();
+        String method = exchange.getRequestMethod();
+        switch (method) {
+            case "GET":
+                handleGet(exchange, path);
+                break;
+            case "POST":
+                handlePost(exchange, path);
+                break;
+            case "DELETE":
+                handleDelete(exchange, path);
+                break;
+            default:
+                sendText(exchange, "Некорректный метод", 400);
+        }
+    }
+
+    protected abstract void handleGet(HttpExchange exchange, String path) throws IOException;
+
+    protected abstract void handlePost(HttpExchange exchange, String path) throws IOException;
+
+    protected abstract void handleDelete(HttpExchange exchange, String path) throws IOException;
+
     protected void sendText(HttpExchange exchange, String text, int statusCode) throws IOException {
         byte[] resp = text.getBytes(StandardCharsets.UTF_8);
         exchange.getResponseHeaders().add("Content-Type", "application/json; charset=utf-8");
