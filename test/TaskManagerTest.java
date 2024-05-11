@@ -1,6 +1,6 @@
-package tests;
-
 import manager.TaskManager;
+import manager.exceptions.NotFoundEpicForSubtaskException;
+import manager.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Status;
@@ -66,9 +66,10 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testGetTaskById_NoExistingId() {
-        Task task = manager.getTaskById(12);
-
-        assertNull(task);
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            Task task = manager.getTaskById(12);
+        });
+        assertEquals("Задача с ID: 12 не найдена", exception.getMessage());
     }
 
     @Test
@@ -113,9 +114,11 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.createTask(task2);
 
         manager.deleteTaskById(task1.getId());
-        Task deletedTask = manager.getTaskById(task1.getId());
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            Task deletedTask = manager.getTaskById(task1.getId());
+        });
+        assertEquals("Задача с ID: 1 не найдена", exception.getMessage());
 
-        assertNull(deletedTask);
         assertEquals(1, manager.getAllTasks().size());
     }
 
@@ -174,9 +177,11 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testGetEpicById_NoExistingId() {
-        Epic epic = manager.getEpicById(1);
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            Epic epic = manager.getEpicById(1);
+        });
 
-        assertNull(epic);
+        assertEquals("Эпик с ID: 1 не найден", exception.getMessage());
     }
 
     @Test
@@ -215,11 +220,13 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.createSubtask(subtask1);
 
         manager.deleteEpicById(epic1.getId());
-        Epic deletedEpic = manager.getEpicById(epic1.getId());
-        Subtask deletedSubtask = manager.getSubtaskById(subtask1.getId());
 
-        assertNull(deletedEpic);
-        assertNull(deletedSubtask);
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            Epic deletedEpic = manager.getEpicById(epic1.getId());
+            Subtask deletedSubtask = manager.getSubtaskById(subtask1.getId());
+        });
+
+        assertEquals("Эпик с ID: 1 не найден", exception.getMessage());
     }
 
     @Test
@@ -279,9 +286,10 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testGetSubtaskById_NoExistingId() {
-        Subtask subtask = manager.getSubtaskById(1);
-
-        assertNull(subtask);
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            Subtask subtask = manager.getSubtaskById(1);
+        });
+        assertEquals("Подзадача с ID: 1 не найдена", exception.getMessage());
     }
 
     @Test
@@ -300,12 +308,13 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testCreateSubtaskById_WithoutEpic() {
-        Subtask subtask1 = new Subtask("name", "description", 152);
-        manager.createSubtask(subtask1);
+        Exception exception = assertThrows(NotFoundEpicForSubtaskException.class, () -> {
+            Subtask subtask1 = new Subtask("name", "description", 152);
+            manager.createSubtask(subtask1);
+            Subtask subtask = manager.getSubtaskById(subtask1.getId());
+        });
 
-        Subtask subtask = manager.getSubtaskById(subtask1.getId());
-
-        assertNull(subtask);
+        assertEquals("Эпик с ID: 152 для подзадачи не найден.", exception.getMessage());
     }
 
     @Test
@@ -342,9 +351,12 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.createSubtask(subtask2);
 
         manager.deleteSubtaskById(subtask1.getId());
-        Subtask deletedSubtask = manager.getSubtaskById(subtask1.getId());
 
-        assertNull(deletedSubtask);
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            Subtask deletedSubtask = manager.getSubtaskById(subtask1.getId());
+        });
+
+        assertEquals("Подзадача с ID: 2 не найдена", exception.getMessage());
         assertEquals(1, epic1.getIdSubtasks().size());
     }
 
